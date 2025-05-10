@@ -12,12 +12,9 @@ export async function resHandler
 ) {
     const commandCategory = event[type];
 
-    console.log("/", readdirSync("/"));
-    console.log("../", readdirSync("../"))
-    console.log(readdirSync(process.cwd()))
-    console.log(resolve(__dirname))
+    console.log(readdirSync("/var/task/src/processes/messenger"));
 
-    readdirSync("/")
+    readdirSync("/var/task/src/processes/messenger")
         .forEach((file: string) => {
             console.log(file)
             if (!event[type].includes(file.split(".")[0].toLowerCase())) return;
