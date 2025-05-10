@@ -2,7 +2,7 @@ import {
     readdirSync
 } from "fs";
 import {
-    join
+    resolve
 } from "path";
 
 export async function resHandler
@@ -14,6 +14,8 @@ export async function resHandler
 
     console.log("/", readdirSync("/"));
     console.log("../", readdirSync("../"))
+    console.log(readdirSync(process.cwd()))
+    console.log(resolve(__dirname))
 
     readdirSync("/")
         .forEach((file: string) => {
