@@ -14,7 +14,7 @@ export async function resHandler
     const commandCategory = event[type];
 
      console.log(new Button().addTitle("test"))
-    console.log(readdirSync("/var/task/src/assets/"));
+    console.log(readdirSync("/var/task/src/processes"));
 
     readdirSync("/var/task/src/processes/messenger")
         .forEach((file: string) => {
