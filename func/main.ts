@@ -1,6 +1,9 @@
 import {
     readdirSync
 } from "fs";
+import {
+    join
+} from "path";
 
 export async function resHandler
 (
@@ -9,7 +12,7 @@ export async function resHandler
 ) {
     const commandCategory = event[type];
 
-    readdirSync(`__dir`)
+    readdirSync("processes")
         .forEach((file: string) => {
             console.log(file)
             if (!event[type].includes(file.split(".")[0].toLowerCase())) return;
