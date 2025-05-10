@@ -9,9 +9,10 @@ export async function resHandler
 ) {
     const commandCategory = event[type];
 
-    readdirSync(`./processes/messenger/${type}/response`)
+    readdirSync(`.`)
         .forEach((file: string) => {
-            if (!commandCategory.includes(file.split(".")[0].toLowerCase())) return;
+            console.log()
+            if (!event[type].includes(file.split(".")[0].toLowerCase())) return;
 
             const command = import(`./../processes/messenger/${type}/response/${file}`);
 
