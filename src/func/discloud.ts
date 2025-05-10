@@ -12,16 +12,13 @@ export async function checkInfo
 (
     appId: string
 ) {
-    const res: any = await axios(`https://api.discloud.app/v2/app/${appId}`, {
+    const res: any = (await axios(`https://api.discloud.app/v2/app/${appId}`, {
             method: "get",
             headers: {
                 "api-token": token
             }
         }
-    );
-
-    console.log(res.data)
-    console.log((await res.data))
+    )).data;
 
     if (!res.status) return badLog
     (
@@ -34,23 +31,22 @@ export async function checkInfo
         "Discloud",
         `Fetched information from "${res.apps.name}" bot: ` + JSON.stringify(res, null, 2)
     );
-    return res();
+    return res;
 };
 
 export async function checkLogs
 (
     appId: string
 ) {
-    const res: any = await axios(`https://api.discloud.app/v2/app/${appId}/logs`, {
+    const res: any = (await axios(`https://api.discloud.app/v2/app/${appId}/logs`, {
             method: "get",
             headers: {
                 "api-token": token
             }
         }
-    );
-    const { json } = res;
+    )).data;
 
-    if (!json().status) return badLog
+    if (!res.status) return badLog
     (
         "Discloud",
         "Unable to fetch logs from App #" + appId
@@ -59,9 +55,9 @@ export async function checkLogs
     goodLog
     (
         "Discloud",
-        `Fetched logs from "${json().apps.name}" bot: ` + JSON.stringify(res, null, 2)
+        `Fetched logs from "${res.apps.name}" bot: ` + JSON.stringify(res, null, 2)
     );
-    return json().apps.terminal.small;
+    return res.apps.terminal.small;
 };
 
 export async function restartApp
@@ -75,8 +71,6 @@ export async function restartApp
             }
         }
     );
-    const { json } = res;
-
 
     if (!res.status) return badLog
     (
@@ -87,7 +81,7 @@ export async function restartApp
     goodLog
     (
         "Discloud",
-        `Restarted "${json().apps.name}" bot: ` + JSON.stringify(res, null, 2)
+        `Restarted "${res.apps.name}" bot: ` + JSON.stringify(res, null, 2)
     );
-    return json();
+    return res;
 };
