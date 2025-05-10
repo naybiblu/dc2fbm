@@ -71,7 +71,7 @@ export async function FBhandler
                 `Processing a webhook event from ${sender}: ` + JSON.stringify(event, null, 2)
             );
 
-            console.log(Object.keys(event[3]));
+            console.log(Object.keys(event)[3]);
             switch (Object.keys(event)[3]) {
                 default: await handleMessage(sender, event.message)
             };
