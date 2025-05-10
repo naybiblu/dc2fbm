@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { put, del } from '@vercel/blob';
 import {
     goodLog,
     badLog,
@@ -98,8 +99,22 @@ export async function handleMessage
     let response: any;
     const { text } = receivedMsg;
 
-    response = await sendTxt(sender, `You said: "${text}"`);
-    console.log(response);
+    if (text.startsWith("hi")) {
+        const data = {
+            id: text.split(" ")[1],
+        };
+        const blob = await put("appdata.json", JSON.stringify(data, null, 2), {
+            access: "public"
+        });
+
+        await sendTxt(sender, "Done!");
+
+        goodLog
+        (
+            "Vercel",
+            "Blob uploaded: " + blob
+        );
+    } else await sendTxt(sender, text);
 
     return response;
 };
