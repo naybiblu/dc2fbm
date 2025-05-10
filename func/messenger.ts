@@ -315,6 +315,7 @@ export async function req2API
     }
 ) {
     let response: any;
+
     if (get) return response = await fetch(`https://graph.facebook.com/v${v}/${target}?${params}&access_token=${access}`);
     else response = await fetch(`https://graph.facebook.com/v${v}/${id}/${path}?access_token=${access}`,
         {
@@ -324,6 +325,17 @@ export async function req2API
             }, 
             body: data
         }
+    );
+
+    if (response.status === 200) goodLog
+    (
+        "FB",
+        `${get ? "GET": "POST"} request granted: ` + JSON.stringify((await response.body.json()), null, 2)
+    );
+    else badLog 
+    (
+        "FB",
+        `${get ? "GET": "POST"} request denied: ${response.status} ${response.statusText}`
     );
 
     return response;
