@@ -5,7 +5,7 @@ import type {
 import {
   verifyFB,
   FBhandler
-} from "./../func/messenger";
+} from "../src/func/messenger";
 
 export default async function handler
 (
