@@ -21,7 +21,7 @@ export async function checkInfo
     );
     const { json } = res;
 
-    if (!json().status) return badLog
+    if (!res.status) return badLog
     (
         "Discloud",
         "Unable to fetch information from App #" + appId
@@ -30,9 +30,9 @@ export async function checkInfo
     goodLog
     (
         "Discloud",
-        `Fetched information from "${json().apps.name}" bot: ` + JSON.stringify(res, null, 2)
+        `Fetched information from "${res.apps.name}" bot: ` + JSON.stringify(res, null, 2)
     );
-    return json();
+    return res();
 };
 
 export async function checkLogs
