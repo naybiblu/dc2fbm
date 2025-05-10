@@ -29,7 +29,7 @@ import { Button } from "../assets/messenger";
 
             console.log(command)
            
-            command.data.run(event, event.sender.id);
+            command.data.run(event, event.sender.id);;;
         }
     );
 };*/
