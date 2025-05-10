@@ -38,6 +38,7 @@ export async function resHandler
     event: any,
     type: string
 ) {
+    console.log(event[type]["text"])
     switch (type) {
         case "message": message[event[type]["text"].split(" ")[1]].run(event, event.sender.id);
         case "payload": console.log(event[type])
