@@ -81,7 +81,7 @@ export async function FBhandler
                 default: response = await handleMessage(sender, event.message)
             };
 
-            if (response === 200) return res.status(200).send("Event handled!")
+            if (response === 200) return res.status(200).send("Event handled!");
         });
     });
 
@@ -96,6 +96,7 @@ export async function handleMessage
     const { text } = receivedMsg;
 
     response = await sendTxt(sender, `You said: "${text}"`);
+    console.log(response);
 
     return response;
 };
