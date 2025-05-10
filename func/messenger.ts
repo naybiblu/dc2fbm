@@ -92,12 +92,7 @@ export async function handleMessage
     let response: any;
     const { text } = receivedMsg;
 
-    if (!text) return;
-    response = {
-        text: `You said: "${text}"`
-    };
-
-    await sendTxt(sender, JSON.stringify(response));
+    await sendTxt(sender, `You said: "${text}"`);
     res.status(200);
 };
 
