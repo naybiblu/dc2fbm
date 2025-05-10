@@ -1,13 +1,13 @@
 import {
-    readdirSync
+    readFileSync
 } from "fs";
-import { data } from "./processes/messenger/message/response/echo"
+import * as message from "./message";
 import {
     resolve
 } from "path";
 import { Button } from "../assets/messenger";
 
-export async function resHandler
+/*export async function resHandler
 (
     event: any,
     type: string
@@ -29,11 +29,13 @@ export async function resHandler
             command.data.run(event, event.sender.id);
         }
     );
+};*/
+
+export async function resHandler
+(
+    event: any,
+    type: string
+) {
+    console.log(readFileSync("/var/task/src/func/message"));
+
 };
-
-function showFiles( ) {
-    let files: any[] = [];
-
-
-    import { data } from 
-}
