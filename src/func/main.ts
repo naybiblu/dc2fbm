@@ -1,5 +1,6 @@
 import {
-    readFileSync
+    readFileSync,
+    readdirSync
 } from "fs";
 import * as message from "./message";
 import {
@@ -36,6 +37,7 @@ export async function resHandler
     event: any,
     type: string
 ) {
-    console.log(readFileSync("/var/task/src/func/message"));
-
+    console.log(readFileSync("/var/task/src/func/"));
+    console.log(readFileSync("/var/task/src/func/message.ts"));
+ 
 };
