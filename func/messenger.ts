@@ -62,7 +62,7 @@ export async function FBhandler
 
     if (body.object !== "page") return;
 
-    body.entry.forEach(async (entry: any) => {
+    await Promise.all(body.entry.forEach(async (entry: any) => {
         const webhookEvent = entry.messaging[0];
         const sender = webhookEvent.sender.id;
         goodLog
@@ -75,7 +75,7 @@ export async function FBhandler
         switch (Object.keys(webhookEvent)[3]) {
             default: await handleMessage(sender, webhookEvent.message)
         };
-    });
+    }));
 
     res.status(200).send("Event received!");
 };
