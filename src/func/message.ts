@@ -10,7 +10,9 @@ export const echo = {
         event: any,
         sender: string
     ) => {
+        
         const receivedMsg = event.message.text.split(" ");
+        console.log(receivedMsg.slice(1, receivedMsg.length))
         await sendTxt(sender, receivedMsg.slice(1, receivedMsg.length).toString());
     }
 };
