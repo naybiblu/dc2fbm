@@ -21,11 +21,11 @@ export async function resHandler
             console.log(file)
             if (!event[type].includes(file.split(".")[0].toLowerCase())) return;
 
-            const command = import(`./../processes/messenger/${type}/response/${file}`);
+            const command: any = import(`./../processes/messenger/${type}/response/${file}`);
 
             console.log(command)
            
-            command.r
+            command.data.run(event, event.sender.id);
         }
     );
 };
