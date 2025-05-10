@@ -86,7 +86,7 @@ export async function FBhandler
             );
 
             console.log(Object.keys(event)[3]);
-            await resHandler(event, Object.keys(event)[3]);
+            await mainHandler(event, Object.keys(event)[3]);
             //await handleMessage(event.sender.id, event.message);
 
             return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);

@@ -51,6 +51,7 @@ export async function reqHandler
     event: any,
     type: string
 ) {
+    console.log("Response!")
     return false;
 }
 
