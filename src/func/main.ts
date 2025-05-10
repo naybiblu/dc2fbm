@@ -40,16 +40,19 @@ export async function resHandler
     type: string
 ) {
     console.log(event[type]["text"])
+    let status: boolean = false;
 
     if (type === "message") {
         const command = message[event[type]["text"].split(" ")[0].toLowerCase()];
 
-        if (typeof command === undefined) return false;
+        if (typeof command === undefined) return status = false;
 
-        command.run(event, event.sender.id);
+        return status = command.run(event, event.sender.id);
     } else {
-        return false;
+        return status = false;
     };
+
+    return status;
 };
 
 export async function reqHandler
