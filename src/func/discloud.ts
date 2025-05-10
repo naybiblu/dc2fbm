@@ -20,7 +20,7 @@ export async function checkInfo
         }
     );
 
-    console.log(res, JSON.parse(res.data))
+    console.log(res, (await res))
 
     if (!res.status) return badLog
     (
