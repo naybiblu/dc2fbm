@@ -108,9 +108,9 @@ export async function handleMessage
             id: text.split(" ")[1],
         };
         const blob = await create("data.json", JSON.stringify(data, null, 2));
-        const acqBlob: any = await get({ getAll: false });
+        const acqBlob = await read({ getFirst: true });
 
-        await read(acqBlob.url);
+        await read(acqBlob);
         await sendTxt(sender, "yes");
 
         goodLog

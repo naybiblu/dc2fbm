@@ -32,11 +32,19 @@ export async function get
 
 export async function read
 (
-    url: string
+    {
+        getFirst = true,
+        url = ""
+    } : {
+        getFirst: boolean,
+        url?: string
+    }
 ) {
-    const data = await axios(url);
+    const firstBlob: any = await get({ getAll: false });
+    const firstBlobURL: string = await firstBlob.id;
+    const data = await axios(getFirst ? firstBlobURL : url);
 
-    return console.log(data)
+    return JSON.parse(data.data);
 };
 
 export async function remove
