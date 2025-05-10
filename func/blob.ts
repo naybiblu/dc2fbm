@@ -42,6 +42,7 @@ export async function read
 ) {
     const firstBlob: any = await get({ getAll: false });
     const firstBlobURL: string = await firstBlob.id;
+    console.log(getFirst ? firstBlobURL : url, firstBlob)
     const data = await axios(getFirst ? firstBlobURL : url);
 
     return JSON.parse(data.data);

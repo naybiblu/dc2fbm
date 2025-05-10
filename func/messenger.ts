@@ -110,7 +110,7 @@ export async function handleMessage
         const blob = await create("data.json", JSON.stringify(data, null, 2));
         const acqBlob = await read({ getFirst: true });
 
-        console.log((await read(acqBlob)));
+        console.log(acqBlob);
         await sendTxt(sender, "yes");
 
         goodLog
