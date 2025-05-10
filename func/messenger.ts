@@ -9,7 +9,7 @@ const {
   FB_VERIFYTOKEN: verify 
 } = process.env;
 
-export function verifyFB
+export async function verifyFB
 (
     req: any,
     res: any

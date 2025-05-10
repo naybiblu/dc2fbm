@@ -2,12 +2,16 @@ import type {
   VercelRequest, 
   VercelResponse 
 } from '@vercel/node';
-import { verifyFB } from "./../func/messenger";
+import {
+  verifyFB,
+  FBhandler
+} from "./../func/messenger";
 
 export default async function handler
 (
   req: VercelRequest, 
   res: VercelResponse
 ) {
-  verifyFB(req, res);
+  await verifyFB(req, res);
+  await FBhandler(req, res);
 };
