@@ -60,5 +60,7 @@ export const menu = {
                         .addImage("https://cdn4.iconfinder.com/data/icons/e-mail-messenger-user-interface/100/settings_user_interface_ui_setup_gear-wheel-512.png")
                 )
         );
+
+        return true;
     }
 };

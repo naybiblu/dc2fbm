@@ -10,7 +10,7 @@ import {
     sortToNewest
 } from "./misc";
 import {
-    resHandler
+    mainHandler
 } from "./main";
 const {
   FB_ACCESSTOKEN: access, 

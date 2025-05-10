@@ -42,7 +42,7 @@ export async function resHandler
     console.log(event[type]["text"])
     switch (type) {
         case "message": return message[event[type]["text"].split(" ")[0].toLowerCase()].run(event, event.sender.id); break;
-        case "payload": return console.log(event[type])
+        default: return false;
     };
 };
 
