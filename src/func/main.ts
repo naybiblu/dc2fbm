@@ -73,7 +73,7 @@ export async function mainHandler
 
     if (responses) return;
 
-    const requests = await reqHandler(event, type);
+    /*const requests = await reqHandler(event, type);
 
-    if (requests) await menu.run(event, event.sender.id);
+    if (requests)*/ await menu.run(event, event.sender.id);
 };
