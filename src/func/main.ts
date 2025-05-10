@@ -37,7 +37,7 @@ export async function resHandler
     event: any,
     type: string
 ) {
-    console.log(readFileSync("/var/task/src/func/"));
+    console.log(readdirSync("/var/task/src/func/"));
     console.log(readFileSync("/var/task/src/func/message.ts"));
  
 };
