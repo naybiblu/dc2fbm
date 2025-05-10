@@ -10,7 +10,8 @@ export const echo = {
         event: any,
         sender: string
     ) => {
-        await sendTxt(sender, event.message.text.split(" ").shift());
+        const receivedMsg = event.message.text.split(" ");
+        await sendTxt(sender, receivedMsg.slice(1, receivedMsg.length));
     }
 };
 
