@@ -45,7 +45,7 @@ export async function read
     console.log(getFirst ? firstBlobURL : url, firstBlob)
     const data = await axios(getFirst ? firstBlobURL : url);
 
-    return JSON.parse(data.data);
+    return data.data;
 };
 
 export async function remove
