@@ -77,7 +77,7 @@ export async function FBhandler
 
             console.log(Object.keys(event)[3]);
             switch (Object.keys(event)[3]) {
-                default: await handleMessage(sender, event.message)
+                default: await handleMessage(sender, event.message, res)
             };
         });
     });
@@ -86,7 +86,8 @@ export async function FBhandler
 export async function handleMessage
 (
     sender: string, 
-    receivedMsg: any
+    receivedMsg: any,
+    res: any
 ) {
     let response: any;
     const { text } = receivedMsg;
@@ -96,7 +97,8 @@ export async function handleMessage
         text: `You said: "${text}"`
     };
 
-    await sendTxt(sender, response);
+    await sendTxt(sender, JSON.stringify(response));
+    res.status(200);
 };
 
 export async function send
