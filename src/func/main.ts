@@ -45,7 +45,7 @@ export async function resHandler
     if (type === "message") {
         const command = message[event[type]["text"].split(" ")[0].toLowerCase()];
 
-        if (typeof command === undefined) return status = false;
+        if (command === undefined) return status = false;
 
         return status = command.run(event, event.sender.id);
     } else {
