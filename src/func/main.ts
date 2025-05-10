@@ -4,6 +4,7 @@ import {
 } from "fs";
 import * as message from "./message";
 import * as payload from "./payload";
+import { menu } from "./message";
 import {
     resolve
 } from "path";
@@ -40,7 +41,29 @@ export async function resHandler
 ) {
     console.log(event[type]["text"])
     switch (type) {
-        case "message": message[event[type]["text"].split(" ")[0].toLowerCase()].run(event, event.sender.id); break;
-        case "payload": console.log(event[type])
-    }
+        case "message": return message[event[type]["text"].split(" ")[0].toLowerCase()].run(event, event.sender.id); break;
+        case "payload": return console.log(event[type])
+    };
+};
+
+export async function reqHandler
+(
+    event: any,
+    type: string
+) {
+    return false;
+}
+
+export async function mainHandler
+(
+    event: any,
+    type: string
+) {
+    const responses = await resHandler(event, type);
+
+    if (responses) return;
+
+    const requests = await reqHandler(event, type);
+
+    if (requests) return await menu.run(event, event.sender.id);
 };

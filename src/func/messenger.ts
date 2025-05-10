@@ -86,9 +86,10 @@ export async function FBhandler
             );
 
             console.log(Object.keys(event)[3]);
-            await resHandler(event, Object.keys(event)[3]);
+            //await resHandler(event, Object.keys(event)[3]);
+            await handleMessage(event.sender.id, event.message);
 
-            return setTimeout(async() => { res.status(200).send("Event handled!") }, 20000);
+            return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
         });
     });
 
@@ -190,7 +191,7 @@ type repConfig = {
     time: number
 };
 const defaultRepV: repConfig = {
-    time: 0
+    time: 5000
 };
 export async function reply
 (
