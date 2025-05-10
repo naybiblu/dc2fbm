@@ -75,7 +75,7 @@ export async function FBhandler
         entry.messaging.forEach(async (event: any) => {
             const sender = event.sender.id;
 
-            if (sender === pageId) return;
+            if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
             let response: any;
             goodLog
@@ -110,7 +110,7 @@ export async function handleMessage
         const blob = await create("data.json", JSON.stringify(data, null, 2));
         const acqBlob = await read({ getFirst: true });
 
-        await read(acqBlob);
+        console.log((await read(acqBlob)));
         await sendTxt(sender, "yes");
 
         goodLog
