@@ -69,6 +69,9 @@ export async function FBhandler
     body.entry.forEach(async (entry: any) => {
         entry.messaging.forEach(async (event: any) => {
             const sender = event.sender.id;
+
+            if (sender === pageId) return;
+
             let response: any;
             goodLog
             (
@@ -78,7 +81,8 @@ export async function FBhandler
 
             console.log(Object.keys(event)[3]);
             switch (Object.keys(event)[3]) {
-                default: response = await handleMessage(sender, event.message)
+                case "message": response = await handleMessage(sender, event.message);
+                case "read"
             };
 
             if (response === 200) return res.status(200).send("Event handled!");
@@ -99,58 +103,6 @@ export async function handleMessage
     console.log(response);
 
     return response;
-};
-
-export async function send
-(
-    sender: string, 
-    payload: any
-) {
-    const body = {
-        recipient: {
-            id: sender,
-        },
-        message: payload
-    };
-
-    try {
-        goodLog
-        (
-            "FB",
-            `Sending a message payload to ${sender}: ` + JSON.stringify(body, null, 2)
-        );
-
-        const res = await fetch(`https://graph.facebook.com/v22.0/${devId}/messages?access_token=${access}`,
-            {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body),
-            }
-        );
-
-        const { json } = res;
-
-        if (res.ok) return goodLog
-        (
-            "FB",
-            "Sent a message: " + JSON.stringify((await json()), null, 2)
-        );
-
-        badLog
-        (
-            "FB",
-            `Failed to send a message due to ${res.status} ${res.statusText}: ` + JSON.stringify((await json()), null, 2)
-        )
-        
-
-    } catch (e) {
-        badLog
-        (
-            "FB",
-            "Unable to send a message: ",
-            e
-        );
-    };   
 };
 
 export async function sendTxt
@@ -330,12 +282,12 @@ export async function req2API
     if (response.status === 200) goodLog
     (
         "FB",
-        `${get ? "GET": "POST"} request granted: ` + JSON.stringify((await response.data.json()), null, 2)
+        `${get ? "GET": "POST"} request granted: ` + JSON.stringify((await response.data), null, 2)
     );
     else badLog 
     (
         "FB",
-        `${get ? "GET": "POST"} request denied due to ${response.status} ${response.statusText}: ` + + JSON.stringify((await response.data.json()), null, 2)
+        `${get ? "GET": "POST"} request denied due to ${response.status} ${response.statusText}: ` + + JSON.stringify((await response.data), null, 2)
     );
 
     return response;
