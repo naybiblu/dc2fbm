@@ -4,6 +4,7 @@ import {
 import {
     resolve
 } from "path";
+import { Button } from "../assets/messenger";
 
 export async function resHandler
 (
@@ -12,6 +13,7 @@ export async function resHandler
 ) {
     const commandCategory = event[type];
 
+     console.log(new Button().addTitle("test"))
     console.log(readdirSync("/var/task/src/assets/"));
 
     readdirSync("/var/task/src/processes/messenger")
@@ -22,6 +24,8 @@ export async function resHandler
             const command = import(`./../processes/messenger/${type}/response/${file}`);
 
             console.log(command)
+           
+            command.r
         }
     );
 };
