@@ -11,7 +11,7 @@ export async function resHandler
 
     readdirSync(`.`)
         .forEach((file: string) => {
-            console.log()
+            console.log(file)
             if (!event[type].includes(file.split(".")[0].toLowerCase())) return;
 
             const command = import(`./../processes/messenger/${type}/response/${file}`);
