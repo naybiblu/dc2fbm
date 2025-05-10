@@ -330,12 +330,12 @@ export async function req2API
     if (response.status === 200) goodLog
     (
         "FB",
-        `${get ? "GET": "POST"} request granted: ` + JSON.stringify((await response.body.json()), null, 2)
+        `${get ? "GET": "POST"} request granted: ` + JSON.stringify((await response.data.json()), null, 2)
     );
     else badLog 
     (
         "FB",
-        `${get ? "GET": "POST"} request denied: ${response.status} ${response.statusText}`
+        `${get ? "GET": "POST"} request denied due to ${response.status} ${response.statusText}: ` + + JSON.stringify((await response.data.json()), null, 2)
     );
 
     return response;
