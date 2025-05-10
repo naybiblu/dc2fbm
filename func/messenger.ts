@@ -9,7 +9,9 @@ import {
     badLog,
     sortToNewest
 } from "./misc";
-
+import {
+    resHandler
+} from "./main";
 const {
   FB_ACCESSTOKEN: access, 
   FB_VERIFYTOKEN: verify,
@@ -77,7 +79,6 @@ export async function FBhandler
 
             if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
-            let response: any;
             goodLog
             (
                 "FB",
@@ -85,9 +86,10 @@ export async function FBhandler
             );
 
             console.log(Object.keys(event)[3]);
-            switch (Object.keys(event)[3]) {
-                case "message": response = await handleMessage(sender, event.message);
-            };
+            /*switch (Object.keys(event)[3]) {
+                case "message": await handleMessage(sender, event.message);
+            };*/
+            await resHandler(event, Object.keys(event)[3]);
 
             return res.status(200).send("Event handled!");
         });
@@ -143,16 +145,18 @@ export async function sendTxt
     return response.status;
 };
 
+type sAConfig = {
+    action: number
+};
+const defaultSAV: sAConfig = {
+    action: 0
+};
 export async function sendAction
 (
-    { 
-        sender, 
-        action = 0
-    } : { 
-        sender: string, 
-        action: number 
-    }
+    sender: string,
+    config?: Partial<sAConfig>
 ) {
+    const { action } = { ...defaultSAV, ...config };
     let interpretation: string;
     switch (action) {
         case 1: interpretation = "mark_seen"; break;
@@ -194,15 +198,15 @@ export async function reply
     } : {
         sender: string,
         content: any,
-        time: number
+        time?: number
     }
 ) {
-    await sendAction({ sender: sender, action: 1});
-    await sendAction({ sender: sender, action: 2});
+    await sendAction(sender, { action: 1 });
+    await sendAction(sender, { action: 2 });
     
     setTimeout(async () => {
         
-        await sendAction({ sender: sender, action: 0});
+        await sendAction(sender);
         await sendTxt(sender, content);
         
     }, time);
@@ -224,16 +228,19 @@ export async function getConvo
     };
 };
 
+type gAMConfig = {
+    filter: any
+};
+const defaultGAMV: gAMConfig = {
+    filter: pageId
+};
 export async function getAllMsgs
 (
-    { 
-        convoID, 
-        filter = pageId
-    } : {
-        convoID: string,
-        filter: any
-    }
+    convoID: string,
+    config?: Partial<gAMConfig>
 ) {
+    const { filter } = { ...defaultGAMV, ...config };
+
     let data: any = await req2API({
         get: true,
         target: convoID,
