@@ -86,11 +86,8 @@ export function getAccurateDate
     else if (hour === 12) stateOutput = { en: "noon", tl: "tanghali" };
     else if (hour < 18) stateOutput = { en: "afternoon", tl: "hapon" };
     else stateOutput = { en: "evening", tl: "gabi" };
-
-    console.log(stateOutput)
     
     switch (element) {
-
       case "whole": output = date.join(" "); break;
       case "dayWord": output = date[0].replace(",", ""); break;
       case "monthWord": output = date[1]; break;
@@ -106,8 +103,10 @@ export function getAccurateDate
       case "militaryTime": output = toMilitaryTime(`${date[5].split(":").slice(0, 2)} ${date[6]}`); break;
       case "unix": output = Math.floor(newDate.getTime() / 1000) - (60 * 60 * 3); break;
       default: output = date.join(" ");
-
     };
+
+    console.log(output)
+
 
     return output;
 };
