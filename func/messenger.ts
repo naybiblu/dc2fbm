@@ -62,20 +62,21 @@ export async function FBhandler
 
     if (body.object !== "page") return;
 
-    await Promise.all(body.entry.forEach(async (entry: any) => {
-        const webhookEvent = entry.messaging[0];
-        const sender = webhookEvent.sender.id;
-        goodLog
-        (
-            "FB",
-            `Processing a webhook event from ${sender}: ` + JSON.stringify(webhookEvent, null, 2)
-        );
+    body.entry.forEach(async (entry: any) => {
+        entry.messaging.forEach(async (event: any) => {
+            const sender = event.sender.id;
+            goodLog
+            (
+                "FB",
+                `Processing a webhook event from ${sender}: ` + JSON.stringify(event, null, 2)
+            );
 
-        console.log(Object.keys(webhookEvent[3]));
-        switch (Object.keys(webhookEvent)[3]) {
-            default: await handleMessage(sender, webhookEvent.message)
-        };
-    }));
+            console.log(Object.keys(event[3]));
+            switch (Object.keys(event)[3]) {
+                default: await handleMessage(sender, event.message)
+            };
+        });
+    });
 
     res.status(200).send("Event received!");
 };
