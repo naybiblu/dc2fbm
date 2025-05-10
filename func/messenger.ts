@@ -163,7 +163,9 @@ export async function sendTxt
         } : content
     };
 
-    await req2API({ data: data });
+    const response = await req2API({ data: data });
+    
+    return response.status;
 };
 
 export async function sendAction
@@ -183,17 +185,19 @@ export async function sendAction
         default: interpretation = "typing_off";
     };
 
-    req2API({ data: {
+    const response = await req2API({ data: {
         recipient: {
-        id: sender.toString()
+            id: sender.toString()
         },
-        sender_action: interpretation
+            sender_action: interpretation
         } 
     });
+
+    return response.status;
 };
 
 export async function getStarted() {
-    req2API({
+    const response = await req2API({
         data: {
         get_started: {
             payload: "newbie"
@@ -202,6 +206,8 @@ export async function getStarted() {
         path: "messenger_profile",
         id: "me"
     });
+
+    return response.status;
 };
 
 export async function reply
@@ -237,7 +243,10 @@ export async function getConvo
         params: `platform=messenger&user-id=${userID}`
     });
 
-    return data.data.data;
+    return {
+        data: data.data.data,
+        status: data.status
+    };
 };
 
 export async function getAllMsgs
@@ -256,7 +265,10 @@ export async function getAllMsgs
         params: `fields=messages{id,created_time,from}`
     });
     
-    return data.data.messages.data.filter((d: any) => d.from.id === filter);
+    return {
+        data: data.data.messages.data.filter((d: any) => d.from.id === filter),
+        status: data.status
+    };
 };
 
 export async function getRecentMsg
@@ -273,7 +285,10 @@ export async function getRecentMsg
         params: `fields=id,created_time,message`
     });
 
-    return data.data;
+    return { 
+        data: data.data,
+        status: data.status
+    };
 };
 
 export async function req2API
@@ -294,14 +309,17 @@ export async function req2API
         id?: string
     }
 ) {
-    if (get) return fetch(`https://graph.facebook.com/v${v}/${target}?${params}&access_token=${access}`);
-        
-    else fetch(`https://graph.facebook.com/v${v}/${id}/${path}?access_token=${access}`,
+    let response: any;
+    if (get) return response = await fetch(`https://graph.facebook.com/v${v}/${target}?${params}&access_token=${access}`);
+    else response = await fetch(`https://graph.facebook.com/v${v}/${id}/${path}?access_token=${access}`,
         {
             method: "post",
             headers: {
             "Content-Type": "application/json"
             }, 
             body: data
-    });
+        }
+    );
+
+    return response;
 };
