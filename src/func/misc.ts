@@ -105,9 +105,6 @@ export function getAccurateDate
       default: output = date.join(" ");
     };
 
-    console.log(output)
-
-
     return output;
 };
 
