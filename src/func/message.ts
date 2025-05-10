@@ -10,7 +10,7 @@ export const echo = {
         event: any,
         sender: string
     ) => {
-        await sendTxt(sender, event.message);
+        console.log((await sendTxt(sender, event.message.split(" ").shift())));
     }
 };
 
