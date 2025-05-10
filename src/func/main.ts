@@ -1,7 +1,7 @@
 import {
     readdirSync
 } from "fs";
-import { data } from "../processes/messenger/message/response/echo"
+import { data } from "./processes/messenger/message/response/echo"
 import {
     resolve
 } from "path";

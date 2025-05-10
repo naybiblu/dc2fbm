@@ -1,6 +1,6 @@
 import {
     sendTxt
-} from "./../../../../func/messenger"
+} from "../../../../messenger"
 
 export const data = {
     name: "echo",
