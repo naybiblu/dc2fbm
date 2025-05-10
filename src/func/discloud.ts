@@ -19,7 +19,8 @@ export async function checkInfo
             }
         }
     );
-    const { json } = res;
+
+    console.log(res, JSON.parse(res.data))
 
     if (!res.status) return badLog
     (
