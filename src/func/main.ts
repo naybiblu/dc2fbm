@@ -3,6 +3,7 @@ import {
     readdirSync
 } from "fs";
 import * as message from "./message";
+import * as payload from "./payload";
 import {
     resolve
 } from "path";
@@ -37,7 +38,8 @@ export async function resHandler
     event: any,
     type: string
 ) {
-    console.log(readdirSync("/var/task/src/func/"));
-    console.log(readFileSync("/var/task/src/func/message.ts"));
- 
+    switch (type) {
+        case "message": message[event[type]["text"]].run(event, event.sender.id);
+        case "payload": console.log(event[type])
+    }
 };
