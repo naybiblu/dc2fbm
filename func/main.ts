@@ -14,6 +14,7 @@ export async function resHandler
 ) {
     const interpreter = typeArr[type];
     const dataCategory = event[interpreter];
+    console.log(dataCategory)
     const commandCategory = dataCategory[interpreter === typeArr[1] ? "payload" : interpreter];
 
     readdirSync(`./processes/messenger/${interpreter}/response`)
