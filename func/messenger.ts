@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { 
-    create
+    create,
+    get
 } from "./blob";
 import {
     goodLog,
@@ -105,9 +106,10 @@ export async function handleMessage
         const data = {
             id: text.split(" ")[1],
         };
-        const blob = await create("appdata.json", JSON.stringify(data, null, 2));
+        const blob = await create("appData.json", JSON.stringify(data, null, 2));
+        const acqBlob = await get({ getAll: false });
 
-        await sendTxt(sender, "Done!");
+        await sendTxt(sender, "yes");
 
         goodLog
         (
