@@ -106,7 +106,7 @@ export async function handleMessage
         const data = {
             id: text.split(" ")[1],
         };
-        const blob = await create("appData.json", JSON.stringify(data, null, 2));
+        const blob = await create("data.json", JSON.stringify(data, null, 2));
         const acqBlob = await get({ getAll: false });
 
         await sendTxt(sender, "yes");
