@@ -40,7 +40,7 @@ export async function resHandler
 ) {
     console.log(event[type]["text"])
     switch (type) {
-        case "message": await message[event[type]["text"].split(" ")[0].toLowerCase()].run(event, event.sender.id);
+        case "message": message[event[type]["text"].split(" ")[0].toLowerCase()].run(event, event.sender.id);
         case "payload": console.log(event[type])
     }
 };

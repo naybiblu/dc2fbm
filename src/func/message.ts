@@ -11,7 +11,7 @@ export const echo = {
         sender: string
     ) => {
         const receivedMsg = event.message.text.split(" ");
-        await sendTxt(sender, receivedMsg.slice(1, receivedMsg.length));
+        await sendTxt(sender, receivedMsg.slice(1, receivedMsg.length).toString());
     }
 };
 
