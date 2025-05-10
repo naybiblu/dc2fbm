@@ -12,7 +12,7 @@ export async function resHandler
 ) {
     const commandCategory = event[type];
 
-    console.log(readdirSync("/var/task/src/processes/messenger"));
+    console.log(readdirSync("/var/task/src/"));
 
     readdirSync("/var/task/src/processes/messenger")
         .forEach((file: string) => {
