@@ -86,6 +86,8 @@ export function getAccurateDate
     else if (hour === 12) output = { en: "noon", tl: "tanghali" };
     else if (hour < 18) output = { en: "afternoon", tl: "hapon" };
     else output = { en: "evening", tl: "gabi" };
+
+    console.log(output)
     
     switch (element) {
 
