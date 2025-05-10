@@ -91,7 +91,7 @@ export async function FBhandler
             };*/
             await resHandler(event, Object.keys(event)[3]);
 
-            return res.status(200).send("Event handled!");
+            return setTimeout(async() => { res.status(200).send("Event handled!") }, 20000);
         });
     });
 
