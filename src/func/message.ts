@@ -38,9 +38,10 @@ export const menu = {
         sender: string
     ) => {
         const id = await read({ getFirst: true });
+                console.log(id)
         const { apps } = await checkInfo(id);
 
-        console.log(id, apps)
+
 
         await reply(sender,
             new QRRow()
