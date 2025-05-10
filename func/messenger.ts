@@ -81,6 +81,8 @@ export async function FBhandler
             };
         });
     });
+
+    res.status(200).send("Event handled!")
 };
 
 export async function handleMessage
