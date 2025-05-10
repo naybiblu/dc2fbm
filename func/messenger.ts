@@ -112,7 +112,7 @@ export async function send
         goodLog
         (
             "FB",
-            `Sending a message payload to ${sender}: ` + JSON.stringify(requestBody, null, 2)
+            `Sending a message payload to ${sender}: ` + JSON.stringify(body, null, 2)
         );
 
         const res = await fetch(`https://graph.facebook.com/v22.0/me/messages?access_token=${access}`,
