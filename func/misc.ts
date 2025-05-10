@@ -16,3 +16,25 @@ export function badLog
 ) {
     console.log(colors.red.bold(`[${provider}]: `) + colors.red(`${message}\n${err}`));
 };
+
+export function unixify
+(
+    date: any
+) {
+  return Math.floor(new Date(date).getTime() / 1000); 
+};
+
+export function sortToNewest
+(
+    array: any, 
+    timeField: any
+) {
+  array.sort((a: any, b: any) => {
+    const dateA: any = new Date(unixify(a[timeField]));
+    const dateB: any = new Date(unixify(b[timeField]));
+    
+    return dateB - dateA; 
+  });
+
+  return array;
+};

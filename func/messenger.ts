@@ -1,13 +1,16 @@
 import fetch from 'node-fetch';
 import {
     goodLog,
-    badLog
+    badLog,
+    sortToNewest
 } from "./misc";
 
 const {
   FB_ACCESSTOKEN: access, 
   FB_VERIFYTOKEN: verify,
-  FB_ID: devId
+  FB_DEVID: devId,
+  FB_PAGEID: pageId,
+  FB_VERSION: v
 } = process.env;
 
 export async function verifyFB
@@ -78,8 +81,6 @@ export async function FBhandler
             };
         });
     });
-
-    res.status(200).send("Event received!");
 };
 
 export async function handleMessage
@@ -95,7 +96,7 @@ export async function handleMessage
         text: `You said: "${text}"`
     };
 
-    await send(sender, response);
+    await sendTxt(sender, response);
 };
 
 export async function send
@@ -148,4 +149,162 @@ export async function send
             e
         );
     };   
+};
+
+export async function sendTxt
+(
+    sender: string, 
+    content: any
+) {
+    const data = {
+        recipient: {
+        id: sender.toString()
+        },
+        messaging_type: typeof content !== "string" && content.attachment?.payload?.template_type === "generic" ? undefined : "RESPONSE",
+        message: typeof content === "string" ? {
+        text: content,
+        } : content
+    };
+
+    await req2API({ data: data });
+};
+
+export async function sendAction
+(
+    { 
+        sender, 
+        action = 0
+    } : { 
+        sender: string, 
+        action: number 
+    }
+) {
+    let interpretation: string;
+    switch (action) {
+        case 1: interpretation = "mark_seen"; break;
+        case 2: interpretation = "typing_on"; break;
+        default: interpretation = "typing_off";
+    };
+
+    req2API({ data: {
+        recipient: {
+        id: sender.toString()
+        },
+        sender_action: interpretation
+        } 
+    });
+};
+
+export async function getStarted() {
+    req2API({
+        data: {
+        get_started: {
+            payload: "newbie"
+        }
+        },
+        path: "messenger_profile",
+        id: "me"
+    });
+};
+
+export async function reply
+(
+    {
+        sender, 
+        content, 
+        time = (content.length / 200) * 10000
+    } : {
+        sender: string,
+        content: any,
+        time: number
+    }
+) {
+    await sendAction({ sender: sender, action: 1});
+    await sendAction({ sender: sender, action: 2});
+    
+    setTimeout(async () => {
+        
+        await sendAction({ sender: sender, action: 0});
+        await sendTxt(sender, content);
+        
+    }, time);
+};
+
+export async function getConvo
+(
+    userID: string
+){
+    const data: any = await req2API({
+        get: true,
+        target: `${pageId}/conversations`,
+        params: `platform=messenger&user-id=${userID}`
+    });
+
+    return data.data.data;
+};
+
+export async function getAllMsgs
+(
+    { 
+        convoID, 
+        filter = pageId
+    } : {
+        convoID: string,
+        filter: any
+    }
+) {
+    let data: any = await req2API({
+        get: true,
+        target: convoID,
+        params: `fields=messages{id,created_time,from}`
+    });
+    
+    return data.data.messages.data.filter((d: any) => d.from.id === filter);
+};
+
+export async function getRecentMsg
+(
+    msgs: any, 
+    timeField: any
+) {
+    if (msgs.length < 0) return null;
+    
+    const recentMsg = await sortToNewest(msgs, timeField)[0];
+    const data: any = await req2API({
+        get: true,
+        target: recentMsg.id,
+        params: `fields=id,created_time,message`
+    });
+
+    return data.data;
+};
+
+export async function req2API
+(
+    { 
+        data, 
+        path = "messages", 
+        get = false, 
+        params = undefined, 
+        target = undefined, 
+        id = devId
+    } : {
+        data?: any,
+        path?: string,
+        get?: boolean,
+        params?: any,
+        target?: any,
+        id?: string
+    }
+) {
+    if (get) return fetch(`https://graph.facebook.com/v${v}/${target}?${params}&access_token=${access}`);
+        
+    else fetch(`https://graph.facebook.com/v${v}/${id}/${path}?access_token=${access}`,
+        {
+            method: "post",
+            headers: {
+            "Content-Type": "application/json"
+            }, 
+            body: data
+    });
 };
