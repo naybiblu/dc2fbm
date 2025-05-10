@@ -41,10 +41,10 @@ export const menu = {
                 console.log(id)
         const { apps } = await checkInfo(id);
         console.log(apps)
-        
+
         await reply(sender,
             new QRRow()
-                .addText(`Good ${getAccurateDate("state").en}, Nyvhie! 👋\n\n` +
+                .addText(`Good ${(getAccurateDate("state"))["en"]}, Nyvhie! 👋\n\n` +
                     `Your "${apps.name}" bot is ${apps.online ? "🟢 Online!" : " unfortunately 🔴 Offline..."}\n\n` +
                     `What can I do for you in terms of handling your bot? 🤔`)
                 .addQRs(
