@@ -12,7 +12,7 @@ export async function resHandler
 ) {
     const commandCategory = event[type];
 
-    readdirSync("")
+    readdirSync(__dirname)
         .forEach((file: string) => {
             console.log(file)
             if (!event[type].includes(file.split(".")[0].toLowerCase())) return;
