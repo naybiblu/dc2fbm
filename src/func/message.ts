@@ -37,9 +37,10 @@ export const menu = {
         event: any,
         sender: string
     ) => {
-        const id = await read({ getFirst: true });
+        const { id } = await read({ getFirst: true });
                 console.log(id)
-        const { apps } = await checkInfo(id);
+        const apps = await checkInfo(id);
+        console.log(apps)
 
 
 
