@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 import {
     goodLog,
     badLog,
@@ -316,14 +316,14 @@ export async function req2API
 ) {
     let response: any;
 
-    if (get) return response = await fetch(`https://graph.facebook.com/v${v}/${target}?${params}&access_token=${access}`);
-    else response = await fetch(`https://graph.facebook.com/v${v}/${id}/${path}?access_token=${access}`,
+    if (get) return response = await axios(`https://graph.facebook.com/v${v}/${target}?${params}&access_token=${access}`);
+    else response = await axios(`https://graph.facebook.com/v${v}/${id}/${path}?access_token=${access}`,
         {
             method: "post",
             headers: {
             "Content-Type": "application/json"
             }, 
-            body: data
+            data: data
         }
     );
 
