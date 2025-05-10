@@ -82,10 +82,9 @@ export async function FBhandler
             console.log(Object.keys(event)[3]);
             switch (Object.keys(event)[3]) {
                 case "message": response = await handleMessage(sender, event.message);
-                case "read"
             };
 
-            if (response === 200) return res.status(200).send("Event handled!");
+            return res.status(200).send("Event handled!");
         });
     });
 
