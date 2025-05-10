@@ -40,9 +40,15 @@ export async function resHandler
     type: string
 ) {
     console.log(event[type]["text"])
-    switch (type) {
-        case "message": return message[event[type]["text"].split(" ")[0].toLowerCase()].run(event, event.sender.id); break;
-        default: return false;
+
+    if (type === "message") {
+        const command = message[event[type]["text"].split(" ")[0].toLowerCase()];
+
+        if (typeof command === undefined) return false;
+
+        command.run(event, event.sender.id);
+    } else {
+        return false;
     };
 };
 
