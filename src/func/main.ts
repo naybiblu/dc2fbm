@@ -43,5 +43,5 @@ export async function mainHandler
 
     /*const requests = await reqHandler(event, type);
 
-    if (requests)*/ await menu.run(event, event.sender.id);
+    if (requestsl)*/ await menu.run(event, event.sender.id);
 };
