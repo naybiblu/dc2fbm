@@ -64,11 +64,12 @@ export async function FBhandler
         "Received POST request with body: " + JSON.stringify(body, null, 2)
     );
 
-    if (body.object !== "page") return;
+    if (body.object !== "page") return res.status(403).send("Invalid request!");
 
     body.entry.forEach(async (entry: any) => {
         entry.messaging.forEach(async (event: any) => {
             const sender = event.sender.id;
+            let response: any;
             goodLog
             (
                 "FB",
@@ -77,25 +78,26 @@ export async function FBhandler
 
             console.log(Object.keys(event)[3]);
             switch (Object.keys(event)[3]) {
-                default: await handleMessage(sender, event.message, res)
+                default: response = await handleMessage(sender, event.message)
             };
+
+            if (response === 200) return res.status(200).send("Event handled!")
         });
     });
 
-    res.status(200).send("Event handled!")
 };
 
 export async function handleMessage
 (
     sender: string, 
     receivedMsg: any,
-    res: any
 ) {
     let response: any;
     const { text } = receivedMsg;
 
-    await sendTxt(sender, `You said: "${text}"`);
-    res.status(200);
+    response = await sendTxt(sender, `You said: "${text}"`);
+
+    return response;
 };
 
 export async function send
