@@ -78,16 +78,16 @@ export function getAccurateDate
     date = formatter.format(date).split(" ");
 
     let output: any;
-
+    let stateOutput: any;
     const newDate = new Date(`${date[1]} ${date[2]} ${date[3]} ${toMilitaryTime(`${date[5].split(":").slice(0, 2)} ${date[6]}`)}:${date[5].split(":")[2]}`);
     const hour = date[5].split(":")[0];
 
-    if (hour < 12 && hour !== 12) output = { en: "morning", tl: "umaga" };
-    else if (hour === 12) output = { en: "noon", tl: "tanghali" };
-    else if (hour < 18) output = { en: "afternoon", tl: "hapon" };
-    else output = { en: "evening", tl: "gabi" };
+    if (hour < 12 && hour !== 12) stateOutput = { en: "morning", tl: "umaga" };
+    else if (hour === 12) stateOutput = { en: "noon", tl: "tanghali" };
+    else if (hour < 18) stateOutput = { en: "afternoon", tl: "hapon" };
+    else stateOutput = { en: "evening", tl: "gabi" };
 
-    console.log(output)
+    console.log(stateOutput)
     
     switch (element) {
 
@@ -102,7 +102,7 @@ export function getAccurateDate
       case "date": output = date[1] + " " + parseInt(date[2].replace(",", ""), 10) + ", " + parseInt(date[3], 10); break;
       case "time": output = date[5] + " " + date[6]; break;
       case "hour": output = date[5].split(":")[0] + " " + date[6]; break;
-      case "state": output = output;
+      case "state": output = stateOutput;
       case "militaryTime": output = toMilitaryTime(`${date[5].split(":").slice(0, 2)} ${date[6]}`); break;
       case "unix": output = Math.floor(newDate.getTime() / 1000) - (60 * 60 * 3); break;
       default: output = date.join(" ");
