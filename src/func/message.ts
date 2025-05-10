@@ -1,5 +1,6 @@
 import {
-    sendTxt
+    sendTxt,
+    reply
 } from "./messenger";
 
 // request
@@ -13,7 +14,7 @@ export const echo = {
         
         const receivedMsg = event.message.text.split(" ");
         console.log(receivedMsg.slice(1, receivedMsg.length))
-        await sendTxt(sender, receivedMsg.slice(1, receivedMsg.length).join(" "));
+        await reply(sender, receivedMsg.slice(1, receivedMsg.length).join(" "));
     }
 };
 
