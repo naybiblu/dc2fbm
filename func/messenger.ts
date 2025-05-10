@@ -6,7 +6,8 @@ import {
 
 const {
   FB_ACCESSTOKEN: access, 
-  FB_VERIFYTOKEN: verify 
+  FB_VERIFYTOKEN: verify,
+  FB_ID: devId
 } = process.env;
 
 export async function verifyFB
@@ -116,7 +117,7 @@ export async function send
             `Sending a message payload to ${sender}: ` + JSON.stringify(body, null, 2)
         );
 
-        const res = await fetch(`https://graph.facebook.com/v22.0/me/messages?access_token=${access}`,
+        const res = await fetch(`https://graph.facebook.com/v22.0/${devId}/messages?access_token=${access}`,
             {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
