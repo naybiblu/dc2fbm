@@ -74,25 +74,23 @@ export async function FBhandler
     if (body.object !== "page") return res.status(403).send("Invalid request!");
 
     body.entry.forEach(async (entry: any) => {
-        entry.messaging.forEach(async (event: any) => {
-            const sender = event.sender.id;
+        const event = entry.messaging[0];
+        const sender = event.sender.id;
 
-            if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
+        if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
-            goodLog
-            (
-                "FB",
-                `Processing a webhook event from ${sender}: ` + JSON.stringify(event, null, 2)
-            );
+        goodLog
+        (
+            "FB",
+            `Processing a webhook event from ${sender}: ` + JSON.stringify(event, null, 2)
+        );
 
-            console.log(Object.keys(event)[3]);
-            await mainHandler(event, Object.keys(event)[3]);
-            //await handleMessage(event.sender.id, event.message);
+        console.log("eventType: " + Object.keys(event)[3]);
+        await mainHandler(event, Object.keys(event)[3]);
+        //await handleMessage(event.sender.id, event.message);
 
-            return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
-        });
+        return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
     });
-
 };
 
 export async function handleMessage
@@ -110,7 +108,6 @@ export async function handleMessage
         const blob = await create("data.json", JSON.stringify(data, null, 2));
         const acqBlob = await read({ getFirst: true });
 
-        console.log(acqBlob);
         await sendTxt(sender, "yes");
 
         goodLog

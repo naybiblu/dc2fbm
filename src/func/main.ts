@@ -39,7 +39,7 @@ export async function resHandler
     event: any,
     type: string
 ) {
-    console.log(event[type]["text"])
+    console.log("eventType: " + event[type]["text"])
     let status: boolean = false;
 
     if (type === "message") {

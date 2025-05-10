@@ -38,9 +38,9 @@ export const menu = {
         sender: string
     ) => {
         const { id } = await read({ getFirst: true });
-                console.log(id)
         const { apps } = await checkInfo(id);
-        console.log(getAccurateDate("state").en, getAccurateDate("state")["en"])
+        console.log("var1: " + getAccurateDate("state").en);
+        console.log("var2: "+ getAccurateDate("state")["en"]);
 
         await reply(sender,
             new QRRow()
