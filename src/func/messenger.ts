@@ -25,7 +25,7 @@ export async function verifyFB
     req: any,
     res: any
 ) {
-    if (req.method !== "GET") return;
+    if (req.method !== "GET") return console.log("hhhhhhhhhhhe")
 
     goodLog
     (
