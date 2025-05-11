@@ -25,7 +25,7 @@ export async function verifyFB
     req: any,
     res: any
 ) {
-    if (req.method !== "GET") return console.log("hhhhhhhhhhhe")
+    if (req.method !== "GET")
 
     goodLog
     (
@@ -86,8 +86,8 @@ export async function FBhandler
         );
 
         console.log("eventType: " + Object.keys(event)[3]);
-        //await mainHandler(event, Object.keys(event)[3]);
-        await handleMessage(event.sender.id, event.message);
+        await mainHandler(event, Object.keys(event)[3]);
+        //await handleMessage(event.sender.id, event.message);
 
         return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
     });
