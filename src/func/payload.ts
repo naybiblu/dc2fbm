@@ -29,7 +29,6 @@ export const BotMainMenu = {
         sender: string,
     ) => {
 
-        console.log("botbot")
         const { id } = await read({ getFirst: true });
         const { apps } = await checkInfo(id);
 
@@ -76,9 +75,11 @@ export const MenuLogs = {
                 )
         );
 
+        console.log(logs)
+
         await reply(sender, 
             new QRRow()
-                .addText(`📝 Logs as of ${getAccurateDate("date")} at ${getAccurateDate("time")}:\n\n${logs}`)
+                .addText(`📝 Logs as of ${getAccurateDate("date")} at ${getAccurateDate("time")}:\n\n${logs.logs}`)
                 .addQRs(
                     new QuickReply()
                         .addTitle("Menu")
