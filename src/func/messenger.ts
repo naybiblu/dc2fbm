@@ -76,8 +76,13 @@ export async function FBhandler
     body.entry.forEach(async (entry: any) => {
         const event = entry.messaging[0];
         const sender = event.sender.id;
+        const data = await getConvo(sender);
+        const msgs = await getAllMsgs(data.data[0].id);
+        const msg = await getRecentMsg(msgs.data, "created_time");
 
-        if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
+        console.log(msg)
+
+        //if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
         goodLog
         (
@@ -88,8 +93,8 @@ export async function FBhandler
         console.log("eventType: " + Object.keys(event)[3]);
         await mainHandler(event, Object.keys(event)[3]);
         //await handleMessage(event.sender.id, event.message);
-        res.status(200).send("Event handled!");
-        //return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
+        
+        return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
     });
 };
 
