@@ -204,14 +204,14 @@ export async function reply
     const { time } = { ...defaultRepV, ...config };
 
     await sendAction(sender, { action: 1 });
-    await sendAction(sender, { action: 2 });
+    //await sendAction(sender, { action: 2 });
     
-    setTimeout(async () => {
+    //setTimeout(async () => {
         
-        await sendAction(sender);
+        //await sendAction(sender);
         await sendTxt(sender, content);
         
-    }, time);
+    //}, time);
 };
 
 export async function getConvo
