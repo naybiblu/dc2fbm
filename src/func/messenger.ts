@@ -12,6 +12,7 @@ import {
 import {
     mainHandler
 } from "./main";
+import { time } from 'console';
 const {
   FB_ACCESSTOKEN: access, 
   FB_VERIFYTOKEN: verify,
@@ -76,17 +77,10 @@ export async function FBhandler
     body.entry.forEach(async (entry: any) => {
         const event = entry.messaging[0];
         const sender = event.sender.id;
-        const data = await getConvo(sender);
-        const msgs = await getAllMsgs(data.data[0].id);
-        //const msg = await getRecentMsg(msgs.data, "created_time");
-        const secondMsg = await sortToNewest(msgs.data, "created_time")[1];
-        const sMsg = (await req2API({
-            get: true,
-            target: secondMsg.id,
-            params: `fields=id,created_time,message`
-        })).data;
+        const comparison = await compareMessages(sender, "created_time", 2, 3);
 
-        console.log(sMsg)
+        console.log(comparison)
+        if (comparison) return res.status(200).send("Duplicate message.");
 
         //if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
@@ -279,6 +273,31 @@ export async function getRecentMsg
         data: data.data,
         status: data.status
     };
+};
+
+export async function compareMessages
+(
+    sender: string,
+    timeField: string,
+    firstMsgPos: number,
+    secondMsgPos: number
+) {
+    const data = await getConvo(sender);
+    const msgs = await getAllMsgs(data.data[0].id);
+    const sortedMsgs = await sortToNewest(msgs.data, timeField);
+
+    const firstMsg = (await req2API({
+            get: true,
+            target: sortedMsgs[firstMsgPos - 1].id,
+            params: `fields=id,created_time,message`
+        })).data;
+    const secondMsg = (await req2API({
+            get: true,
+            target: sortedMsgs[secondMsgPos - 1].id,
+            params: `fields=id,created_time,message`
+        })).data;
+    
+    return firstMsg.message === secondMsg.message;
 };
 
 export async function req2API
