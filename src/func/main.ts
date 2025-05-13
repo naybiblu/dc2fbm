@@ -5,28 +5,27 @@ import { menu } from "./message";
 export async function resHandler
 (
     event: any,
-    type: string
+    type: string,
+    response: any
 ) {
     console.log("eventType: " + event[type]["text"])
-    let status: boolean = false;
 
     if (type === "message") {
         const command = message[event[type]["text"].split(" ")[0].toLowerCase()];
 
-        if (command === undefined) return status = false;
+        if (command === undefined) return false;
 
-        return status = command.run(event, event.sender.id);
+        return command.run(event, event.sender.id, response);
     } else {
-        return status = false;
+        return false;
     };
-
-    return status;
 };
 
 export async function reqHandler
 (
     event: any,
-    type: string
+    type: string,
+    response: any
 ) {
     console.log("Response!")
     return false;
@@ -38,13 +37,11 @@ export async function mainHandler
     type: string,
     response: any
 ) {
-    const responses = await resHandler(event, type);
+    const responses = await resHandler(event, type, response);
 
     if (responses) return;
 
     /*const requests = await reqHandler(event, type);
 
-    if (requests)*/ await menu.run(event, event.sender.id);
-
-    response.status(200).send("Event handled!");
+    if (requests)*/ await menu.run(event, event.sender.id, response);
 };
