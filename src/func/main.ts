@@ -13,7 +13,7 @@ export async function mainHandler
 
     if (type === "message") {
         if (quickReply) {
-            const qreply = payload[quickReply];
+            const qreply = payload[quickReply.payload];
 
             if (qreply === undefined) return payload.BotMainMenu.run(event, sender);
 
