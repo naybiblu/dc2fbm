@@ -15,7 +15,7 @@ export async function mainHandler
         if (quickReply) {
             const qreply = payload[quickReply];
 
-            if (qreply === undefined) return false;
+            if (qreply === undefined) return payload.BotMainMenu.run(event, sender);
 
             return qreply.run(event, sender);
         } else {
@@ -24,7 +24,7 @@ export async function mainHandler
             const command = message[firstWord];
 
             if (!isNaN(firstWord) && firstWord.split("").length === 13) return payload.changeAppID.run(event, sender, firstWord);
-            if (command === undefined) return false;
+            if (command === undefined) return payload.BotMainMenu.run(event, sender);
 
             return await command.run(event, sender);
         };
