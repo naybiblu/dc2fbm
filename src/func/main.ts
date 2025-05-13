@@ -35,7 +35,8 @@ export async function reqHandler
 export async function mainHandler
 (
     event: any,
-    type: string
+    type: string,
+    response: any
 ) {
     const responses = await resHandler(event, type);
 
@@ -44,4 +45,6 @@ export async function mainHandler
     /*const requests = await reqHandler(event, type);
 
     if (requests)*/ await menu.run(event, event.sender.id);
+
+    response.status(200).send("Event handled!");
 };
