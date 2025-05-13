@@ -1,26 +1,40 @@
 import * as message from "./message";
 import * as payload from "./payload";
-import { menu } from "./message";
 
-export async function resHandler
+export async function mainHandler
 (
     event: any,
+    sender: string,
     type: string,
 ) {
     console.log("eventType: " + event[type]["text"])
+    const typeObj = event[type];
+    const quickReply = typeObj["quick_reply"];
 
     if (type === "message") {
-        const command = message[event[type]["text"].split(" ")[0].toLowerCase()];
+        if (quickReply) {
+            const qreply = payload[quickReply];
 
-        if (command === undefined) return false;
+            if (qreply === undefined) return false;
 
-        return command.run(event, event.sender.id);
-    } else {
+            return qreply.run(event, sender);
+        } else {
+            const chat = typeObj["text"].toLowerCase();
+            const firstWord = chat.split(" ")[0];
+            const command = message[firstWord];
+
+            if (!isNaN(firstWord) && firstWord.split("").length === 13) return payload.changeAppID.run(event, sender, firstWord);
+            if (command === undefined) return false;
+
+            return command.run(event, sender);
+        };
+    } else return payload.BotMainMenu.run(event, sender);
+    /*} else {
         return false;
-    };
+    };*/
 };
 
-export async function reqHandler
+/*export async function reqHandler
 (
     event: any,
     type: string,
@@ -40,5 +54,5 @@ export async function mainHandler
 
     /*const requests = await reqHandler(event, type);
 
-    if (requests)*/ await menu.run(event, event.sender.id);
-};
+    if (requests) await menu.run(event, event.sender.id);
+};*/

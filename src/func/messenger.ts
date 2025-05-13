@@ -91,7 +91,7 @@ export async function FBhandler
         );
 
         console.log("eventType: " + Object.keys(event)[3]);
-        await mainHandler(event, Object.keys(event)[3]);
+        await mainHandler(event, sender, Object.keys(event)[3]);
         //await handleMessage(event.sender.id, event.message);
         
         return setTimeout(async() => { res.status(200).send("Event handled!") }, 15000);
@@ -275,12 +275,10 @@ export async function getRecentMsg
     };
 };
 
-export async function compareMessages
+export async function getSortedMsgs
 (
     sender: string,
-    timeField: string,
-    firstMsgPos: number,
-    secondMsgPos: number
+    timeField: string
 ) {
     const data = await getConvo(sender);
     const msgs = await req2API({
@@ -289,6 +287,18 @@ export async function compareMessages
         params: `fields=messages{id,created_time,from}`
     });
     const sortedMsgs = await sortToNewest(msgs.data.messages.data, timeField);
+
+    return sortedMsgs;
+};
+
+export async function compareMessages
+(
+    sender: string,
+    timeField: string,
+    firstMsgPos: number,
+    secondMsgPos: number
+) {
+    const sortedMsgs = await getSortedMsgs(sender, timeField);
 
     const firstMsg = (await req2API({
             get: true,

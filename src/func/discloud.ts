@@ -20,7 +20,7 @@ export async function checkInfo
         }
     )).data;
 
-    if (!res.status) return badLog
+    if (!res.status || res.status !== "ok") return badLog
     (
         "Discloud",
         "Unable to fetch information from App #" + appId
@@ -46,18 +46,27 @@ export async function checkLogs
         }
     )).data;
 
-    if (!res.status) return badLog
-    (
-        "Discloud",
-        "Unable to fetch logs from App #" + appId
-    );
+    if (!res.status || res.status !== "ok") {
+        badLog
+        (
+            "Discloud",
+            "Unable to fetch logs from App #" + appId
+        );
+
+        return {
+            status: "off"
+        };
+    }
 
     goodLog
     (
         "Discloud",
         `Fetched logs from "${res.apps.name}" bot: ` + JSON.stringify(res, null, 2)
     );
-    return res.apps.terminal.small;
+    return {
+        logs: res.apps.terminal.small,
+        status: res.status
+    };
 };
 
 export async function restartApp
@@ -72,7 +81,7 @@ export async function restartApp
         }
     );
 
-    if (!res.status) return badLog
+    if (!res.status || res.status !== "ok") return badLog
     (
         "Discloud",
         "Unable to restart App #" + appId
