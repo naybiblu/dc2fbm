@@ -73,8 +73,9 @@ export async function FBhandler
 
     if (body.object !== "page") return res.status(403).send("Invalid request!");
 
-    res.status(200).send("Event handled!")
+    
 
+    console.log(body.entry)
     body.entry.forEach(async (entry: any) => {
         const event = entry.messaging[0];
         const sender = event.sender.id;
