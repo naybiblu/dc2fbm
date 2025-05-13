@@ -66,6 +66,7 @@ export const menu = {
                 )
         );
 
+        console.log(response)
         response.status(200);
         return true;
     }
