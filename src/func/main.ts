@@ -26,9 +26,9 @@ export async function mainHandler
             if (!isNaN(firstWord) && firstWord.split("").length === 13) return payload.changeAppID.run(event, sender, firstWord);
             if (command === undefined) return false;
 
-            return command.run(event, sender);
+            return await command.run(event, sender);
         };
-    } else return payload.BotMainMenu.run(event, sender);
+    } else return await payload.BotMainMenu.run(event, sender);
     /*} else {
         return false;
     };*/
