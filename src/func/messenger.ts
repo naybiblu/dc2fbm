@@ -78,9 +78,10 @@ export async function FBhandler
         const sender = event.sender.id;
         const data = await getConvo(sender);
         const msgs = await getAllMsgs(data.data[0].id);
-        const msg = await getRecentMsg(msgs.data, "created_time");
+        //const msg = await getRecentMsg(msgs.data, "created_time");
+        const secondMsg = await sortToNewest(msgs.data, "created_time")[1];
 
-        console.log(msg)
+        console.log(secondMsg)
 
         //if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
