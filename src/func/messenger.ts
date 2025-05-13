@@ -79,7 +79,7 @@ export async function FBhandler
         const sender = event.sender.id;
         const comparison = await compareMessages(sender, "created_time", 1, 2);
 
-        console.log(comparison)
+        console.log(comparison )
         if (comparison) return res.status(200).send("Duplicate message.");
 
         //if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
@@ -296,6 +296,9 @@ export async function compareMessages
             target: sortedMsgs[secondMsgPos - 1].id,
             params: `fields=id,created_time,message`
         })).data;
+
+    console.log(firstMsg);
+    console.log(secondMsg)
     
     return firstMsg.message === secondMsg.message;
 };
