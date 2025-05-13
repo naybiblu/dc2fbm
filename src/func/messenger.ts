@@ -80,8 +80,13 @@ export async function FBhandler
         const msgs = await getAllMsgs(data.data[0].id);
         //const msg = await getRecentMsg(msgs.data, "created_time");
         const secondMsg = await sortToNewest(msgs.data, "created_time")[1];
+        const sMsg = (await req2API({
+            get: true,
+            target: secondMsg.id,
+            params: `fields=id,created_time,message`
+        })).data;
 
-        console.log(secondMsg)
+        console.log(sMsg)
 
         //if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
