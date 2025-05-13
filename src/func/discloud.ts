@@ -73,15 +73,19 @@ export async function restartApp
 (
     appId: string
 ) {
-    const res: any = await axios(`https://api.discloud.app/v2/app/${appId}/restart`, {
-            method: "put",
+    const res: any = await axios(`http://dc2fbm-helper.vercel.app/api/136501080131/restart`, {
+            method: "post",
             headers: {
-                "api-token": token
+                "Content-Type": "application/json"
+            },
+            data: {
+                "id": appId,
+                "token": token
             }
         }
     );
 
-    if (!res.status || res.status !== "ok") return badLog
+    /*if (!res.status || res.status !== "ok") return badLog
     (
         "Discloud",
         "Unable to restart App #" + appId
@@ -91,6 +95,6 @@ export async function restartApp
     (
         "Discloud",
         `Restarted "${res.apps.name}" bot: ` + JSON.stringify(res, null, 2)
-    );
+    );*/
     return res;
 };
