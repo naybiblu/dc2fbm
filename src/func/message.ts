@@ -23,7 +23,6 @@ export const echo = {
     run: async(
         event: any,
         sender: string,
-        response: any
     ) => { 
         const receivedMsg = event.message.text.split(" ");
 
@@ -31,7 +30,6 @@ export const echo = {
 
         await reply(sender, receivedMsg.slice(1, receivedMsg.length).join(" "));
 
-        response.status(200).send("Event handled!");
         return true;
     }
 };
@@ -40,7 +38,6 @@ export const menu = {
     run: async(
         event: any,
         sender: string,
-        response: any
     ) => {
         const { id } = await read({ getFirst: true });
         const { apps } = await checkInfo(id);
@@ -66,8 +63,6 @@ export const menu = {
                 )
         );
 
-        console.log(response)
-        response.status(200).send("Event handled!");
         return true;
     }
 };

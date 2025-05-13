@@ -91,10 +91,10 @@ export async function FBhandler
         );
 
         console.log("eventType: " + Object.keys(event)[3]);
-        await mainHandler(event, Object.keys(event)[3], res);
+        await mainHandler(event, Object.keys(event)[3]);
         //await handleMessage(event.sender.id, event.message);
         
-        //return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
+        return setTimeout(async() => { res.status(200).send("Event handled!") }, 15000);
     });
 };
 

@@ -6,7 +6,6 @@ export async function resHandler
 (
     event: any,
     type: string,
-    response: any
 ) {
     console.log("eventType: " + event[type]["text"])
 
@@ -15,7 +14,7 @@ export async function resHandler
 
         if (command === undefined) return false;
 
-        return command.run(event, event.sender.id, response);
+        return command.run(event, event.sender.id);
     } else {
         return false;
     };
@@ -25,7 +24,6 @@ export async function reqHandler
 (
     event: any,
     type: string,
-    response: any
 ) {
     console.log("Response!")
     return false;
@@ -35,13 +33,12 @@ export async function mainHandler
 (
     event: any,
     type: string,
-    response: any
 ) {
-    const responses = await resHandler(event, type, response);
+    const responses = await resHandler(event, type);
 
     if (responses) return;
 
     /*const requests = await reqHandler(event, type);
 
-    if (requests)*/ await menu.run(event, event.sender.id, response);
+    if (requests)*/ await menu.run(event, event.sender.id);
 };
