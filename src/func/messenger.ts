@@ -298,7 +298,8 @@ export async function compareMessages
         })).data;
 
     console.log(firstMsg);
-    console.log(secondMsg)
+    console.log(secondMsg);
+    console.log(sortedMsgs)
     
     return firstMsg.message === secondMsg.message;
 };
