@@ -28,6 +28,8 @@ export const BotMainMenu = {
         event: any,
         sender: string,
     ) => {
+
+        console.log("botbot")
         const { id } = await read({ getFirst: true });
         const { apps } = await checkInfo(id);
 

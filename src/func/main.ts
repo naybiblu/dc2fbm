@@ -28,7 +28,7 @@ export async function mainHandler
 
             return await command.run(event, sender);
         };
-    } else return await payload.BotMainMenu.run(event, sender);
+    } else await payload.BotMainMenu.run(event, sender);
     /*} else {
         return false;
     };*/
