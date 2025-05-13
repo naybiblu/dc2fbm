@@ -80,7 +80,7 @@ export async function FBhandler
         const comparison = await compareMessages(sender, "created_time", 1, 2);
 
         console.log(comparison )
-        if (comparison) return res.status(200).send("Duplicate message.");
+        if (comparison.checkIfSame && comparison.first.uid !== event.recepient.id) return res.status(200).send("Duplicate message.");
 
         //if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
@@ -305,7 +305,19 @@ export async function compareMessages
     console.log(secondMsg);
     console.log(sortedMsgs)
     
-    return firstMsg.message === secondMsg.message;
+    return {
+        checkIfSame: firstMsg.message === secondMsg.message,
+        first: {
+            ...firstMsg,
+            name: sortedMsgs[firstMsgPos - 1].from.name,
+            uid: sortedMsgs[firstMsgPos - 1].from.id
+        },
+        second: {
+            ...secondMsg,
+            name: sortedMsgs[secondMsgPos - 1].from.name,
+            uid: sortedMsgs[secondMsgPos - 1].from.id
+        }
+    };
 };
 
 export async function req2API
