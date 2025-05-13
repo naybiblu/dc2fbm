@@ -77,7 +77,7 @@ export async function FBhandler
     body.entry.forEach(async (entry: any) => {
         const event = entry.messaging[0];
         const sender = event.sender.id;
-        const comparison = await compareMessages(sender, "created_time", 2, 3);
+        const comparison = await compareMessages(sender, "created_time", 1, 2);
 
         console.log(comparison)
         if (comparison) return res.status(200).send("Duplicate message.");
