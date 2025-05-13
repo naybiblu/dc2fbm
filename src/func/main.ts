@@ -14,7 +14,7 @@ export async function resHandler
         const command = message[event[type]["text"].split(" ")[0].toLowerCase()];
 
         if (command === undefined) return status = false;
-        console.log("command here")
+
         return status = command.run(event, event.sender.id);
     } else {
         return status = false;

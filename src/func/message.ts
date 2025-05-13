@@ -26,6 +26,8 @@ export const echo = {
     ) => { 
         const receivedMsg = event.message.text.split(" ");
 
+        console.log("Echo : " + event)
+
         await reply(sender, receivedMsg.slice(1, receivedMsg.length).join(" "));
 
         return true;

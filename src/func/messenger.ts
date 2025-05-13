@@ -25,7 +25,7 @@ export async function verifyFB
     req: any,
     res: any
 ) {
-    if (req.method !== "GET")
+    if (req.method !== "GET") return;
 
     goodLog
     (
@@ -73,6 +73,8 @@ export async function FBhandler
 
     if (body.object !== "page") return res.status(403).send("Invalid request!");
 
+    res.status(200).send("Event handled!")
+
     body.entry.forEach(async (entry: any) => {
         const event = entry.messaging[0];
         const sender = event.sender.id;
@@ -86,10 +88,10 @@ export async function FBhandler
         );
 
         console.log("eventType: " + Object.keys(event)[3]);
-        await mainHandler(event, Object.keys(event)[3]);
+        await mainHandler(event, Object.keys(event)[3]).catch((e: any) => console.error(e));
         //await handleMessage(event.sender.id, event.message);
 
-        return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
+        //return setTimeout(async() => { res.status(200).send("Event handled!") }, 50000);
     });
 };
 
