@@ -283,8 +283,12 @@ export async function compareMessages
     secondMsgPos: number
 ) {
     const data = await getConvo(sender);
-    const msgs = await getAllMsgs(data.data[0].id);
-    const sortedMsgs = await sortToNewest(msgs.data, timeField);
+    const msgs = await req2API({
+        get: true,
+        target: data.data[0].id,
+        params: `fields=messages{id,created_time,from}`
+    });
+    const sortedMsgs = await sortToNewest(msgs.data.messages.data, timeField);
 
     const firstMsg = (await req2API({
             get: true,
