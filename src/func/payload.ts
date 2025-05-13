@@ -4,7 +4,8 @@ import {
     req2API
 } from "./messenger";
 import {
-    getAccurateDate
+    getAccurateDate,
+    lastElementsOfArr
 } from "./misc";
 import {
     read,
@@ -79,7 +80,7 @@ export const MenuLogs = {
 
         await reply(sender, 
             new QRRow()
-                .addText(`📝 Logs as of ${getAccurateDate("date")} at ${getAccurateDate("time")}:\n\n${logs.logs}`)
+                .addText(`📝 Logs as of ${getAccurateDate("date")} at ${getAccurateDate("time")}:\n\n${lastElementsOfArr(logs.logs.split("\n").slice(), 12).join("\n")}`)
                 .addQRs(
                     new QuickReply()
                         .addTitle("Menu")

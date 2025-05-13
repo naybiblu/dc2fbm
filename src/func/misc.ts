@@ -80,7 +80,7 @@ export function getAccurateDate
     let output: any;
 
     const newDate = new Date(`${date[1]} ${date[2]} ${date[3]} ${toMilitaryTime(`${date[5].split(":").slice(0, 2)} ${date[6]}`)}:${date[5].split(":")[2]}`);
-    const hour = date[5].split(":")[0];
+    const hour = parseInt(toMilitaryTime(`${date[5].split(":").slice(0, 2)} ${date[6]}`).split(":")[0]);
 
     if (hour < 12 && hour !== 12) output = { en: "morning", tl: "umaga" };
     else if (hour === 12) output = { en: "noon", tl: "tanghali" };
@@ -106,6 +106,15 @@ export function getAccurateDate
     };
 
     return output;
+};
+
+export function lastElementsOfArr 
+(
+  array: any[],
+  noOfElements?: number
+) {
+  const n = noOfElements === undefined ? 1 : noOfElements; 
+  return array.slice(-n);
 };
 
 export function unixify
