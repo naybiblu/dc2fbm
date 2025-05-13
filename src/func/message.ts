@@ -31,7 +31,7 @@ export const echo = {
 
         await reply(sender, receivedMsg.slice(1, receivedMsg.length).join(" "));
 
-        response.status(200);
+        response.status(200).send("Event handled!");
         return true;
     }
 };
@@ -67,7 +67,7 @@ export const menu = {
         );
 
         console.log(response)
-        response.status(200);
+        response.status(200).send("Event handled!");
         return true;
     }
 };
