@@ -43,7 +43,7 @@ export const BotMainMenu = {
                         .addTitle("Check logs")
                         .addId("MenuLogs")
                         /*.addImage("https://static.vecteezy.com/system/resources/thumbnails/014/551/056/small_2x/eye-icon-simple-flat-eye-design-vision-care-concept-wear-glasses-for-a-clear-vision-png.png")*/,
-                    apps.online ? undefined : new QuickReply()
+                    new QuickReply()
                         .addTitle("Restart")
                         .addId("MenuRestart")
                         /*.addImage("https://cdn2.iconfinder.com/data/icons/zoldo-minimal-user-interface/32/power_reset_restart-512.png")*/,
