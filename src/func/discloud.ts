@@ -64,7 +64,7 @@ export async function checkLogs
         `Fetched logs from "${res.apps.name}" bot: ` + JSON.stringify(res, null, 2)
     );
     return {
-        logs: res.apps.terminal.small,
+        logs: res.apps.terminal.small.replace(/\[33m|\[39m/g, ''),
         status: res.status
     };
 };
