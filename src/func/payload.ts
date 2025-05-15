@@ -83,8 +83,11 @@ export const MenuLogs = {
                 .addText(`📝 Logs as of ${getAccurateDate("date")} at ${getAccurateDate("time")}:\n\n${lastElementsOfArr(logs.logs.split("\n").slice(), 12).join("\n")}`)
                 .addQRs(
                     new QuickReply()
+                        .addTitle("Refresh")
+                        .addId("MenuLogs"),
+                    new QuickReply()
                         .addTitle("Menu")
-                        .addId("BotMainMenu")
+                        .addId("BotMainMenu"),
                 )
         );
     }
