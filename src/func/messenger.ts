@@ -79,7 +79,9 @@ export async function FBhandler
         const sender = event.sender.id;
         const comparison = await compareMessages(sender, "created_time", 1, 2);
 
-        console.log(checkIfAlreadyReplied(sender, "created_time"))
+        const check = await checkIfAlreadyReplied(sender, "created_time")
+
+        console.log(check)
 
         //console.log(comparison )
         if (comparison.checkIfSame && comparison.first.uid !== sender) {
