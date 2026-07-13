@@ -79,6 +79,8 @@ export async function FBhandler
         const sender = event.sender.id;
         const comparison = await compareMessages(sender, "created_time", 1, 2);
 
+        console.log(checkIfAlreadyReplied(sender, "created_time"))
+
         //console.log(comparison )
         if (comparison.checkIfSame && comparison.first.uid !== sender) {
             goodLog
@@ -281,6 +283,16 @@ export async function getRecentMsg
         status: data.status
     };
 };
+
+export async function checkIfAlreadyReplied(
+    sender: string,
+    timeField: string
+) {
+    const data = await getSortedMsgs(sender, timeField);
+    const recentMsg = await getRecentMsg(data, timeField);
+
+    return recentMsg;
+}
 
 export async function getSortedMsgs
 (
