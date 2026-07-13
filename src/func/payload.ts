@@ -212,7 +212,15 @@ export const ChangeDevMode = {
             ...others
         }, null, 2));
 
-        await reply(sender, `Hooray! 🎉\n\nThe Development Mode has been turned "${result ? "ON" : "OFF"}"`);
+        await reply(sender,
+            new QRRow()
+                .addText(`Hooray! 🎉\n\nThe Development Mode has been turned "${result ? "ON" : "OFF"}"!`)
+                .addQRs(
+                    new QuickReply()
+                        .addTitle("Menu")
+                        .addId("BotMainMenu")
+                )
+        );
     }
 };
 
