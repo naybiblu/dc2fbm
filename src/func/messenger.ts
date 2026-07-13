@@ -2,7 +2,8 @@ import axios from 'axios';
 import { 
     create,
     get,
-    read
+    read,
+    remove
 } from "./blob";
 import {
     goodLog,
@@ -110,8 +111,11 @@ export async function handleMessage
         const data = {
             id: text.split(" ")[1],
         };
-        const blob = await create("data.json", JSON.stringify(data, null, 2));
         const acqBlob = await read({ getFirst: true });
+
+        if (acqBlob) await remove(acqBlob.url);
+
+        const blob = await create("data.json", JSON.stringify(data, null, 2));
 
         await sendTxt(sender, "yes");
 
