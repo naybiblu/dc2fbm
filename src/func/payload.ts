@@ -159,7 +159,10 @@ export const MenuSettings = {
                         .addId("ChangeRefRate"),
                     new QuickReply()
                         .addTitle("Change 4")
-                        .addId("ChangeAnsDuration")
+                        .addId("ChangeAnsDuration"),
+                    new QuickReply()
+                        .addTitle("Menu")
+                        .addId("BotMainMenu")
                 )
         );
     }
