@@ -48,8 +48,11 @@ export const BotMainMenu = {
                         .addId("MenuRestart")
                         /*.addImage("https://cdn2.iconfinder.com/data/icons/zoldo-minimal-user-interface/32/power_reset_restart-512.png")*/,
                     new QuickReply()
+                        .addTitle("Change Settings")
+                        .addId("MenuSettings")
+                    /*new QuickReply()
                         .addTitle("Change ID")
-                        .addId("MenuChange")
+                        .addId("MenuChange")*/
                         /*.addImage("https://cdn4.iconfinder.com/data/icons/e-mail-messenger-user-interface/100/settings_user_interface_ui_setup_gear-wheel-512.png")*/
                 )
         ).catch((e: any) => console.error(e));
@@ -133,12 +136,41 @@ export const MenuRestartYes = {
     }
 };
 
-export const MenuChange = {
+export const MenuSettings = {
     run: async(
         event: any,
         sender: string,
     ) => {
-        await reply(sender, "Please enter your App ID:");
+        const current = await read({ getFirst: true });
+        await reply(sender,
+            new QRRow()
+                .addText(`⚙ Current Settings\n\n1️⃣ App ID: ${current?.id}\n\n2️⃣ Development Mode: ${current?.onDevMode ?? "undefined"}` +
+                    `3️⃣ Refresh Rate: ${current?.refreshRate ?? "undefined"}\n\n4️⃣ Answering Duration Window: ${current?.answerDuration ?? "undefined"}`
+                )
+                .addQRs(
+                    new QuickReply()
+                        .addTitle("Change 1")
+                        .addId("ChangeAppID"),
+                    new QuickReply()
+                        .addTitle("Change 2")
+                        .addId("ChangeDevMode"),
+                    new QuickReply()
+                        .addTitle("Change 3")
+                        .addId("ChangeRefRate"),
+                    new QuickReply()
+                        .addTitle("Change 4")
+                        .addId("ChangeAnsDuration")
+                )
+        );
+    }
+};
+
+export const ChangeAppID = {
+    run: async(
+        event: any,
+        sender: string,
+    ) => {
+        await reply(sender, "Please enter your new App ID:");
     }
 };
 
@@ -148,22 +180,101 @@ export const changeAppID = {
         sender: string,
         appID: string
     ) => {
-        const sortedMsgs = await getSortedMsgs(sender, "created_time");
-        const secondRecentMsg = (await req2API({
-            get: true,
-            target: sortedMsgs[1].id,
-            params: `fields=id,created_time,message`
-        })).data;
-
-        if (!secondRecentMsg.message.toLowerCase().includes("please enter your new app id:")) return;
+        const { id, ...others } = await read({ getFirst: true });
 
         await create("data.json", JSON.stringify({
             id: appID,
+            ...others
         }, null, 2));
 
         await reply(sender,
             new QRRow()
-                .addText(`Hooray! 🎉\n\nThe App ID had been changed to "${appID}"!`)
+                .addText(`Hooray! 🎉\n\nThe App ID has been changed to "${appID}"!`)
+                .addQRs(
+                    new QuickReply()
+                        .addTitle("Menu")
+                        .addId("BotMainMenu")
+                )
+        );
+    }
+};
+
+export const ChangeDevMode = {
+    run: async(
+        event: any,
+        sender: string,
+    ) => {
+        const { onDevMode, ...others } = await read({ getFirst: true });
+        const result = !onDevMode;
+
+        await create("data.json", JSON.stringify({
+            onDevMode: result,
+            ...others
+        }, null, 2));
+
+        await reply(sender, `Hooray! 🎉\n\nThe Development Mode has been turned ${result}`);
+    }
+};
+
+export const ChangeRefRate = {
+    run: async(
+        event: any,
+        sender: string,
+    ) => {
+        await reply(sender, "Please enter your preferred refresh rate:");
+    }
+};
+
+export const changeRefRate = {
+    run: async(
+        event: any,
+        sender: string,
+        refreshInterval: string
+    ) => {
+        const { refreshRate, ...others } = await read({ getFirst: true });
+        
+        await create("data.json", JSON.stringify({
+            refreshRate: refreshInterval,
+            ...others
+        }, null, 2));
+
+        await reply(sender,
+            new QRRow()
+                .addText(`Hooray! 🎉\n\nThe Refresh Rate has been changed to "${refreshInterval}"!`)
+                .addQRs(
+                    new QuickReply()
+                        .addTitle("Menu")
+                        .addId("BotMainMenu")
+                )
+        );
+    }
+};
+
+export const ChangeAnsDuration = {
+    run: async(
+        event: any,
+        sender: string,
+    ) => {
+        await reply(sender, "Please enter your preferred answer duration window:");
+    }
+};
+
+export const changeAnsDuration = {
+    run: async(
+        event: any,
+        sender: string,
+        answerWindow: string
+    ) => {
+        const { answerDuration, ...others } = await read({ getFirst: true });
+        
+        await create("data.json", JSON.stringify({
+            answerDuration: answerWindow,
+            ...others
+        }, null, 2));
+
+        await reply(sender,
+            new QRRow()
+                .addText(`Hooray! 🎉\n\nThe Answer Duration Window has been changed to "${answerWindow}"!`)
                 .addQRs(
                     new QuickReply()
                         .addTitle("Menu")

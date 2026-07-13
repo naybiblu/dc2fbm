@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { 
     create,
-    get,
-    remove
+    read,
 } from "./blob";
 import {
     goodLog,
@@ -98,8 +97,8 @@ export async function FBhandler
         );
 
         console.log("eventType: " + Object.keys(event)[3]);
-        await mainHandler(event, sender, Object.keys(event)[3]);
-        //await handleMessage(event.sender.id, event.message);
+        //await mainHandler(event, sender, Object.keys(event)[3]);
+        await handleMessage(event.sender.id, event.message);
         
         return setTimeout(async() => { res.status(200).send("Event handled!") }, 15000);
     });
@@ -116,6 +115,9 @@ export async function handleMessage
     if (text.startsWith("hi")) {
         const data = {
             id: text.split(" ")[1],
+            onDevMode: false,
+            refreshRate: 30,
+            answerDuration: 60
         };
 
         const blob = await create("data.json", JSON.stringify(data, null, 2));
@@ -281,6 +283,21 @@ export async function getRecentMsg
         status: data.status
     };
 };
+
+export async function checkWithSecondMsg
+(
+    sender: string,
+    checkString: string
+) {
+    const sortedMsgs = await getSortedMsgs(sender, "created_time");
+    const secondRecentMsg = (await req2API({
+        get: true,
+        target: sortedMsgs[1].id,
+        params: `fields=id,created_time,message`
+    })).data;
+
+    return secondRecentMsg.message.toLowerCase().includes(checkString); // if false, return
+}
 
 export async function checkIfAlreadyReplied(
     sender: string,

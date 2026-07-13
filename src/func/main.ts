@@ -1,5 +1,7 @@
+import { isNumber } from "util";
 import * as message from "./message";
 import * as payload from "./payload";
+import { checkWithSecondMsg } from "./messenger";
 
 export async function mainHandler
 (
@@ -22,8 +24,14 @@ export async function mainHandler
             const chat = typeObj["text"].toLowerCase();
             const firstWord = chat.split(" ")[0];
             const command = message[firstWord];
+            const check4AppID = await checkWithSecondMsg(sender, "please enter your new app id:");
+            const check4RefRate = await checkWithSecondMsg(sender, "please enter your preferred refresh rate:");
+            const check4AnsDuration = await checkWithSecondMsg(sender, "please enter your preferred answer duration window:");
 
-            if (!isNaN(firstWord) && firstWord.split("").length === 13) return payload.changeAppID.run(event, sender, firstWord);
+            if (!isNaN(firstWord) && firstWord.split("").length === 13 && check4AppID) return payload.changeAppID.run(event, sender, firstWord);
+            if (!isNaN(firstWord) && check4RefRate) return payload.changeRefRate.run(event, sender, firstWord);
+            if (!isNaN(firstWord) && check4AnsDuration) return payload.changeAnsDuration.run(event, sender, firstWord);
+
             if (command === undefined) return payload.BotMainMenu.run(event, sender);
 
             return await command.run(event, sender);
