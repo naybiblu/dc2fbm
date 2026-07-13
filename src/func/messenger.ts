@@ -113,6 +113,7 @@ export async function handleMessage
         };
         const acqBlob = await read({ getFirst: true });
 
+        console.log(acqBlob)
         if (acqBlob) await remove(acqBlob.url);
 
         const blob = await create("data.json", JSON.stringify(data, null, 2));
