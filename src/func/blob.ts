@@ -3,7 +3,8 @@ import axios from "axios";
 
 const defaultParams = {
     access: "public",
-    allowOverwrite: true
+    allowOverwrite: true,
+    storeId: process.env.BLOB_READ_WRITE_TOKEN_STORE_ID,
 };
 
 export async function create
