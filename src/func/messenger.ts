@@ -80,7 +80,14 @@ export async function FBhandler
         const comparison = await compareMessages(sender, "created_time", 1, 2);
 
         //console.log(comparison )
-        if (comparison.checkIfSame && comparison.first.uid !== sender) return res.status(200).send("Duplicate message.");
+        if (comparison.checkIfSame && comparison.first.uid !== sender) {
+            goodLog
+            (
+                "FB",
+                "Duplicate message."
+            );
+            return res.status(200).send("Duplicate message.");
+        }
 
         //if (sender === pageId) return res.status(200).send("Bot reponse rejected for request!");
 
@@ -91,8 +98,8 @@ export async function FBhandler
         );
 
         console.log("eventType: " + Object.keys(event)[3]);
-        //await mainHandler(event, sender, Object.keys(event)[3]);
-        await handleMessage(event.sender.id, event.message);
+        await mainHandler(event, sender, Object.keys(event)[3]);
+        //await handleMessage(event.sender.id, event.message);
         
         return setTimeout(async() => { res.status(200).send("Event handled!") }, 15000);
     });
