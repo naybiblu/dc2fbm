@@ -144,8 +144,8 @@ export const MenuSettings = {
         const current = await read({ getFirst: true });
         await reply(sender,
             new QRRow()
-                .addText(`⚙ Current Settings\n\n1️⃣ App ID: ${current?.id}\n\n2️⃣ Development Mode: ${current?.onDevMode ?? "undefined"}` +
-                    `3️⃣ Refresh Rate: ${current?.refreshRate ?? "undefined"}\n\n4️⃣ Answering Duration Window: ${current?.answerDuration ?? "undefined"}`
+                .addText(`⚙ Current Settings\n\n1️⃣ App ID: ${current?.id}\n2️⃣ Development Mode: ${current?.onDevMode ? "ON" : "OFF"}\n` +
+                    `3️⃣ Refresh Rate: ${current?.refreshRate ?? "undefined"} seconds\n4️⃣ Answering Duration Window: ${current?.answerDuration ?? "undefined"} minutes`
                 )
                 .addQRs(
                     new QuickReply()
@@ -212,7 +212,7 @@ export const ChangeDevMode = {
             ...others
         }, null, 2));
 
-        await reply(sender, `Hooray! 🎉\n\nThe Development Mode has been turned ${result}`);
+        await reply(sender, `Hooray! 🎉\n\nThe Development Mode has been turned "${result ? "ON" : "OFF"}"`);
     }
 };
 
@@ -240,7 +240,7 @@ export const changeRefRate = {
 
         await reply(sender,
             new QRRow()
-                .addText(`Hooray! 🎉\n\nThe Refresh Rate has been changed to "${refreshInterval}"!`)
+                .addText(`Hooray! 🎉\n\nThe Refresh Rate has been changed to "${refreshInterval} seconds"!`)
                 .addQRs(
                     new QuickReply()
                         .addTitle("Menu")
@@ -274,7 +274,7 @@ export const changeAnsDuration = {
 
         await reply(sender,
             new QRRow()
-                .addText(`Hooray! 🎉\n\nThe Answer Duration Window has been changed to "${answerWindow}"!`)
+                .addText(`Hooray! 🎉\n\nThe Answer Duration Window has been changed to "${answerWindow} minutes"!`)
                 .addQRs(
                     new QuickReply()
                         .addTitle("Menu")
