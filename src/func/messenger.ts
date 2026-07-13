@@ -110,11 +110,6 @@ export async function handleMessage
         const data = {
             id: text.split(" ")[1],
         };
-        const acqBlob = await get({ getAll: false });
-
-        console.log(acqBlob)
-
-        if (acqBlob) await remove(acqBlob.url);
 
         const blob = await create("data.json", JSON.stringify(data, null, 2));
 
