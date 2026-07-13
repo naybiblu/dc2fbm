@@ -2,7 +2,7 @@ import { put, del, list } from '@vercel/blob';
 import axios from "axios";
 
 const defaultParams = {
-    access: "private",
+    access: "public",
     allowOverwrite: true,
 };
 
