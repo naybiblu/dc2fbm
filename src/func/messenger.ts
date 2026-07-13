@@ -277,7 +277,7 @@ export async function getRecentMsg
     const data: any = await req2API({
         get: true,
         target: recentMsg.id,
-        params: `fields=id,created_time,message`
+        params: `fields=id,created_time,message,from`
     });
 
     return { 
